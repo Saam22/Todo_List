@@ -1,8 +1,27 @@
-<html>
-  <head>
-    <title>Task List</title>
-  </head>
-  <body>
-    <h1>Task List - {{ task_detail }}</h1>
-  </body>
-</html>
+{% extends 'base/base.html' %} {% block title %}View Task{% endblock %} {% block content %}
+<div class="task-detail-container">
+  <div class="task-card">
+    <h1 class="task-title">View Task</h1>
+
+    <div class="task-info">
+      <p><strong>Title:</strong> {{ task.title }}</p>
+      <p>
+        <strong>Description:</strong> {{ task.description|default:"No
+        description available." }}
+      </p>
+      <p>
+        <strong>Status:</strong>
+        {% if task.complete %}
+        <span class="status complete">✅ Completed</span>
+        {% else %}
+        <span class="status incomplete">❌ Not Completed</span>
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="actions">
+      <a href="{% url 'tasks' %}" class="back-link">← Back to Tasks</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

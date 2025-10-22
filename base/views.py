@@ -26,7 +26,7 @@ class TaskList(LoginRequiredMixin,ListView):
 
 class TaskDetail(LoginRequiredMixin,DetailView):
     model=Task
-    context_object_name = 'task_detail'
+    context_object_name = 'task'
     
 class TaskCreate(LoginRequiredMixin,CreateView):
     model=Task

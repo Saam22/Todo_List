@@ -1,6 +1,13 @@
-<h3>Task Form</h3>
-<a href="{% url 'tasks' %}">go back</a>
+{% extends 'base/base.html' %}
+{% block title %}New Task{% endblock %}
+
+{% block content %}
+<h2>Create / Edit Task</h2>
+<a href="{% url 'tasks' %}">← Back to list</a>
+
 <form method="POST" action="">
-  {% csrf_token %} {{ form.as_p }}
-  <input type="submit" value="Create Task" />
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Save Task" class="btn-primary" />
 </form>
+{% endblock %}
