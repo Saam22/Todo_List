@@ -3,109 +3,144 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task Lists</title>
+    <title>My Tasks</title>
     <style>
       :root {
-        --primary-color: #2563eb;
-        --secondary-color: #f3f4f6;
-        --accent-color: #10b981;
-        --danger-color: #ef4444;
-        --text-color: #111827;
+        --primary: #2563eb;
+        --secondary: #f3f4f6;
+        --accent: #10b981;
+        --danger: #ef4444;
+        --text: #111827;
+        --card-bg: #ffffff;
+        --shadow: rgba(0, 0, 0, 0.08);
+      }
+
+      /* 🌙 Dark Mode Support */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --primary: #3b82f6;
+          --secondary: #1f2937;
+          --accent: #22c55e;
+          --danger: #f87171;
+          --text: #f3f4f6;
+          --card-bg: #111827;
+          --shadow: rgba(255, 255, 255, 0.08);
+        }
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: var(--secondary-color);
-        color: var(--text-color);
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--secondary);
+        color: var(--text);
         margin: 0;
         padding: 0;
         display: flex;
         justify-content: center;
+        min-height: 100vh;
       }
 
       .container {
-        width: 100%;
+        width: 95%;
         max-width: 800px;
-        background: white;
-        margin-top: 40px;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background: var(--card-bg);
+        margin: 40px 0;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px var(--shadow);
+        transition: 0.3s ease;
       }
 
-      h1,
-      h2 {
-        text-align: center;
-        color: var(--primary-color);
+      .container:hover {
+        box-shadow: 0 10px 25px var(--shadow);
       }
 
-      .user-info {
+      header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: var(--primary-color);
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .user-info {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
         color: white;
-        padding: 10px 15px;
-        border-radius: 8px;
+        padding: 12px 18px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
-      form.logout-form {
-        display: inline;
-      }
-
-      form.logout-form button {
+      .logout-form button {
         background: white;
-        color: var(--primary-color);
+        color: var(--primary);
         border: none;
         padding: 6px 12px;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: pointer;
+        font-weight: 500;
         transition: 0.3s;
       }
 
-      form.logout-form button:hover {
+      .logout-form button:hover {
         background: #e2e8f0;
       }
 
-      .task-actions a {
-        margin-right: 8px;
-        text-decoration: none;
-        font-size: 14px;
-        color: var(--primary-color);
-      }
-
-      .task-actions a:hover {
-        text-decoration: underline;
-      }
-
-      a.add-task {
+      .add-task {
         display: inline-block;
-        background: var(--accent-color);
+        background: var(--accent);
         color: white;
-        padding: 10px 15px;
-        border-radius: 6px;
+        padding: 10px 16px;
+        border-radius: 10px;
         text-decoration: none;
-        margin: 15px 0;
+        font-weight: 500;
+        margin-top: 15px;
+        transition: 0.3s ease;
       }
 
-      a.add-task:hover {
+      .add-task:hover {
         background: #059669;
+        transform: scale(1.05);
+      }
+
+      .search-form {
+        margin: 25px 0;
+        display: flex;
+        gap: 10px;
       }
 
       input[type="text"] {
-        width: 75%;
-        padding: 8px;
+        flex: 1;
+        padding: 10px 14px;
         border: 1px solid #d1d5db;
-        border-radius: 6px;
+        border-radius: 8px;
+        outline: none;
+        font-size: 15px;
+        background: var(--secondary);
+        color: var(--text);
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
       }
 
       button[type="submit"] {
-        background: var(--primary-color);
+        background: var(--primary);
         color: white;
         border: none;
-        padding: 8px 15px;
-        border-radius: 6px;
+        padding: 10px 16px;
+        border-radius: 8px;
         cursor: pointer;
+        font-weight: 500;
+        transition: 0.3s;
       }
 
       button[type="submit"]:hover {
@@ -115,29 +150,54 @@
       ul {
         list-style: none;
         padding: 0;
+        margin: 0;
       }
 
       li {
-        background: #f9fafb;
-        margin: 10px 0;
-        padding: 10px 15px;
-        border-radius: 8px;
+        background: var(--secondary);
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        transition: 0.3s;
       }
 
       li:hover {
-        background: #f3f4f6;
+        background: #e5e7eb;
+        transform: translateY(-2px);
+      }
+
+      .task-title {
+        font-weight: 500;
+        font-size: 1.1rem;
+      }
+
+      .task-actions a {
+        margin-left: 10px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--primary);
+      }
+
+      .task-actions a:hover {
+        text-decoration: underline;
+      }
+
+      .task-actions a.delete {
+        color: var(--danger);
       }
 
       .no-tasks {
         text-align: center;
-        color: #6b7280;
-        margin-top: 15px;
+        color: #9ca3af;
+        margin-top: 25px;
       }
     </style>
   </head>
+
   <body>
     <div class="container">
       {% if request.user.is_authenticated %}
@@ -148,24 +208,26 @@
           <button type="submit">Logout</button>
         </form>
       </div>
-      <p style="text-align:center; margin-top:10px;">
-        ✅ You have <strong>{{ count }}</strong> completed tasks.
+      <p style="text-align: center; margin-top: 10px">
+        ✅ Completed tasks: <strong>{{ count }}</strong>
       </p>
       {% else %}
-      <div style="text-align:center;">
-        <a href="{% url 'login' %}">Login</a>
+      <div style="text-align: center">
+        <a href="{% url 'login' %}" class="add-task">Login</a>
       </div>
       {% endif %}
 
-      <h1>My Task List</h1>
+      <header>
+        <h1>My Task List</h1>
+      </header>
 
-      <a href="{% url 'task_create'%}" class="add-task">+ Add Task</a>
+      <a href="{% url 'task_create'%}" class="add-task">+ Add New Task</a>
 
-      <form method="GET" action="">
+      <form method="GET" action="" class="search-form">
         <input
           type="text"
           name="search-area"
-          placeholder="Search Tasks..."
+          placeholder="Search your tasks..."
           value="{{ search_input }}"
         />
         <button type="submit">Search</button>
@@ -174,19 +236,15 @@
       <ul>
         {% for task in tasks %}
         <li>
-          <span>{{ task.title }}</span>
+          <span class="task-title">{{ task.title }}</span>
           <div class="task-actions">
             <a href="{% url 'task_detail' task.id %}">View</a>
             <a href="{% url 'task_update' task.id %}">Edit</a>
-            <a
-              href="{% url 'task_delete' task.id %}"
-              style="color: var(--danger-color)"
-              >Delete</a
-            >
+            <a href="{% url 'task_delete' task.id %}" class="delete">Delete</a>
           </div>
         </li>
         {% empty %}
-        <li class="no-tasks">No tasks found.</li>
+        <li class="no-tasks">No tasks found. Add one above!</li>
         {% endfor %}
       </ul>
     </div>
